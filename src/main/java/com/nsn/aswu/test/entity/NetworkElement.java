@@ -6,6 +6,8 @@ package com.nsn.aswu.test.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -19,12 +21,12 @@ import java.util.List;
 public class NetworkElement
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String dn;
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL )
-    @JoinColumn( name = "ne_id", nullable = false )
     private List<Alarm> alarmList;
 
     public long getId()

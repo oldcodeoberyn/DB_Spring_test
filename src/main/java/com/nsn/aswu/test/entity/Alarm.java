@@ -8,9 +8,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 /**
  * @author Yan Shanli
@@ -20,6 +23,8 @@ import javax.persistence.ManyToOne;
 public class Alarm
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator( name = "alarm_id_seq", initialValue = 1, allocationSize = 1 )
     private long id;
     private String alarmingObjectDn;
     private String alarmingObjectName;
@@ -32,6 +37,20 @@ public class Alarm
     private String ackStatus;
     private String supplementaryInfo;
     private String diagnosticInfo;
+
+    public NetworkElement getNetworkElement()
+    {
+        return networkElement;
+    }
+
+    public void setNetworkElement( NetworkElement networkElement )
+    {
+        this.networkElement = networkElement;
+    }
+
+    @ManyToOne( optional = false )
+    @JoinColumn (name = "ne_id", nullable = false)
+    private NetworkElement networkElement;
 
     public long getId()
     {
